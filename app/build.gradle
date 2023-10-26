@@ -26,6 +26,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    ext.customVersionIncrement = 1
+
+    buildTypes {
+        release {
+            applicationVariants.all { variant ->
+                variant.outputs.all { output ->
+                    output.versionCodeOverride = android.defaultConfig.versionCode + customVersionIncrement
+                    output.versionNameOverride = android.defaultConfig.versionName + "-" + customVersionIncrement
+                    customVersionIncrement += 1
+                }
+            }
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
