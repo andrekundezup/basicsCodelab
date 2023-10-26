@@ -29,13 +29,12 @@ android {
 
     ext.customVersionIncrement = 1
 
-    buildTypes {
-        release {
-            applicationVariants.all { variant ->
-                variant.outputs.all { output ->
-                    output.versionCodeOverride = android.defaultConfig.versionCode + customVersionIncrement
-                    output.versionNameOverride = android.defaultConfig.versionName + "-" + customVersionIncrement
-                    customVersionIncrement += 1
+    task incrementVersion {
+        doLast {
+            android.applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    output.versionCodeOverride = ext.initialVersionCode
+                    ext.initialVersionCode++
                 }
             }
         }
